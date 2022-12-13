@@ -1,0 +1,17 @@
+browser:
+  type: firefox
+  capabilities:
+    marionette: true
+driver:
+  manage:
+    timeouts:
+      implicitWait: 30s
+      pageLoadTimeout: 30s
+      scriptTimeout: 30s
+    window:
+      position:
+        x: 0
+        y: 0
+      dimension:
+        length: 1920
+        width: 1080
