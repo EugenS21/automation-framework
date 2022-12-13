@@ -4,11 +4,10 @@ import io.vavr.control.Try;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.eugens21.user_interface.properties.browser.BrowserProperties;
-import org.eugens21.user_interface.properties.driver.*;
-import org.eugens21.user_interface.properties.locators.HomePageLocators;
+import org.eugens21.user_interface.properties.browser.WebDriverProperties;
+import org.eugens21.user_interface.properties.browser.config.Position;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.remote.AbstractDriverOptions;
@@ -28,13 +27,13 @@ import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordi
 public class WebDriver {
 
     BrowserProperties browserProperties;
-    BrowserWebDriverContainer chrome;
+    BrowserWebDriverContainer browserWebDriverContainer;
     WebDriverProperties webDriverProperties;
 
     @Autowired
     public WebDriver(BrowserProperties browserProperties, WebDriverProperties webDriverProperties) {
         this.browserProperties = browserProperties;
-        this.chrome = Try.withResources(BrowserWebDriverContainer::new)
+        this.browserWebDriverContainer = Try.withResources(BrowserWebDriverContainer::new)
                 .of(e->e.withCapabilities(browserProperties.getType()).withRecordingMode(SKIP, null))
                 .getOrElseThrow(() -> new AssertionError("Unable to run container"));
         this.webDriverProperties = webDriverProperties;
@@ -42,12 +41,12 @@ public class WebDriver {
 
     @PostConstruct
     public void start() {
-        chrome.start();
+        browserWebDriverContainer.start();
     }
 
     @PreDestroy
     public void destroy() {
-        chrome.stop();
+        browserWebDriverContainer.stop();
     }
 
     private RemoteWebDriver configureDriver(RemoteWebDriver webDriver) {
@@ -73,8 +72,8 @@ public class WebDriver {
     }
 
     @Bean
-    public org.openqa.selenium.WebDriver getDriver() {
-        return configureDriver(new RemoteWebDriver(chrome.getSeleniumAddress(), getCapabilities()));
+    public org.openqa.selenium.WebDriver driver() {
+        return configureDriver(new RemoteWebDriver(browserWebDriverContainer.getSeleniumAddress(), getCapabilities()));
     }
 
 }

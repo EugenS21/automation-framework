@@ -1,0 +1,14 @@
+page:
+  url: https://parabank.parasoft.com/parabank/index.htm
+  body:
+    mainPanel:
+      headerPanel:
+        leftMenu:
+          self: XPATH:[//ul[@class='leftmenu']]
+          solutions: XPATH:[//ul[@class='leftmenu']/li[@class='Solutions']]
+          aboutUs: sdasda
+          services: asda+
+          products: asdas
+          locations: asdasda
+          adminPage: adminPage
+

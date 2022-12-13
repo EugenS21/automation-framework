@@ -15,3 +15,33 @@ driver:
       dimension:
         length: 1920
         width: 1080
+
+pages:
+  home:
+    url: https://parabank.parasoft.com/parabank/index.htm
+    body:
+      self: XPATH:[//body]
+      mainPanel:
+        self: ID:[mainPanel]
+        topPanel:
+          self: ID:[topPanel]
+          anchors:
+            admin: /parabank/admin.htm
+            homePage: /parabank/index.htm
+          text: sada
+        headerPanel:
+          self: ID:[headerPanel]
+          leftMenu:
+            self: XPATH:[//ul[@class='leftmenu']]
+            solutions: XPATH:[//ul[@class='leftmenu']/li[@class='Solutions']]
+            aboutUs: XPATH:[//ul[@class='leftmenu']/li[contains(.,'About Us')]]
+            services: XPATH:[//ul[@class='leftmenu']/li[contains(.,'Services')]]
+            products: XPATH:[//ul[@class='leftmenu']/li[contains(.,'Products')]]
+            locations: XPATH:[//ul[@class='leftmenu']/li[contains(.,'Locations')]]
+            adminPage: XPATH:[//ul[@class='leftmenu']/li[contains(.,'Admin Page')]]
+          buttons:
+            home: home
+            aboutUs: aboutUs
+            contact: contact
+      footerMainPanel:
+        value: asdasdadasda

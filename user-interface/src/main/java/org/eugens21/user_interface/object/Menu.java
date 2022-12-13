@@ -1,12 +1,11 @@
 package org.eugens21.user_interface.object;
 
-import org.openqa.selenium.WebElement;
-
 import java.util.List;
 
-public interface Menu {
+public interface Menu<T> {
 
-    void openElement(String element);
-    List<WebElement> getList();
+    List<T> getItems();
+
+    T getItem(String name);
 
 }
