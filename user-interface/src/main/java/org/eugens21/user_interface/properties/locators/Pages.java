@@ -1,23 +1,22 @@
-package org.eugens21.user_interface.properties.browser;
+package org.eugens21.user_interface.properties.locators;
 
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.openqa.selenium.remote.AbstractDriverOptions;
+import org.eugens21.user_interface.properties.locators.home_page.HomePageDetails;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-
-import java.util.Map;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ConfigurationProperties(prefix = "pages")
 @ConfigurationPropertiesScan
-@ConfigurationProperties(prefix = "browser")
-public class BrowserProperties {
+public class Pages {
 
-    AbstractDriverOptions type;
-    Map<String, Boolean> capabilities;
+    @NestedConfigurationProperty
+    HomePageDetails home;
 
 }

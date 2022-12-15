@@ -1,23 +1,43 @@
 package org.eugens21.user_interface.page;
 
+import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.eugens21.user_interface.object.HomePageLeftMenu;
-import org.openqa.selenium.By;
+import lombok.experimental.NonFinal;
+import org.eugens21.user_interface.page.home.Body;
+import org.eugens21.user_interface.properties.locators.Pages;
+import org.eugens21.user_interface.properties.locators.home_page.HomePageDetails;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Component
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class HomePage {
 
-    HomePageLeftMenu menu;
-    public HomePage(WebDriver webDriver) {
-        this.menu = new HomePageLeftMenu(webDriver);
+    WebDriver webDriver;
+    HomePageDetails homePageDetails;
+    @Getter
+    @NonFinal
+    Body body;
+
+    @Autowired
+    public HomePage(WebDriver webDriver, Pages pages) {
+        this.webDriver = webDriver;
+        this.homePageDetails = pages.getHome();
+        this.webDriver.get(homePageDetails.getUrl());
+    }
+
+    @PostConstruct
+    public void initializeElements() {
+        this.body = new Body(webDriver, homePageDetails.getBody());
+    }
+
+    public void open() {
+        if (!webDriver.getCurrentUrl().equals(homePageDetails.getUrl())) {
+            webDriver.get(homePageDetails.getUrl());
+        }
     }
 
 }
