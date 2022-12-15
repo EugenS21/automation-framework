@@ -14,9 +14,19 @@
 
     <properties>
         <cucumber.version>7.9.0</cucumber.version>
+        <model.mapper.version>3.1.0</model.mapper.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${model.mapper.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -25,7 +35,6 @@
         <dependency>
             <groupId>org.eugens21</groupId>
             <artifactId>user-interface</artifactId>
-            <version>${parent.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
