@@ -10,9 +10,11 @@ import org.eugens21.user_interface.properties.browser.WebDriverProperties;
 import org.eugens21.user_interface.properties.browser.config.Position;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.AbstractDriverOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.testcontainers.containers.BrowserWebDriverContainer;
@@ -26,27 +28,33 @@ import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordi
 @SuppressWarnings("rawtypes")
 public class WebDriver {
 
+    Boolean debug;
     BrowserProperties browserProperties;
     BrowserWebDriverContainer browserWebDriverContainer;
     WebDriverProperties webDriverProperties;
 
     @Autowired
-    public WebDriver(BrowserProperties browserProperties, WebDriverProperties webDriverProperties) {
+    public WebDriver(BrowserProperties browserProperties, @Value(("${application.use-debug}")) Boolean debug, WebDriverProperties webDriverProperties) {
+        this.debug = debug;
         this.browserProperties = browserProperties;
         this.browserWebDriverContainer = Try.withResources(BrowserWebDriverContainer::new)
-                .of(e->e.withCapabilities(browserProperties.getType()).withRecordingMode(SKIP, null))
+                .of(e -> e.withCapabilities(browserProperties.getType()).withRecordingMode(SKIP, null))
                 .getOrElseThrow(() -> new AssertionError("Unable to run container"));
         this.webDriverProperties = webDriverProperties;
     }
 
     @PostConstruct
     public void start() {
-        browserWebDriverContainer.start();
+        if (!debug) {
+            browserWebDriverContainer.start();
+        }
     }
 
     @PreDestroy
     public void destroy() {
-        browserWebDriverContainer.stop();
+        if (!debug) {
+            browserWebDriverContainer.stop();
+        }
     }
 
     private RemoteWebDriver configureDriver(RemoteWebDriver webDriver) {
@@ -73,6 +81,9 @@ public class WebDriver {
 
     @Bean
     public org.openqa.selenium.WebDriver driver() {
+        if (debug) {
+            return configureDriver(new ChromeDriver());
+        }
         return configureDriver(new RemoteWebDriver(browserWebDriverContainer.getSeleniumAddress(), getCapabilities()));
     }
 

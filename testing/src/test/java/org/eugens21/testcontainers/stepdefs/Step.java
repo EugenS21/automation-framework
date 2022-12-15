@@ -10,12 +10,12 @@ import lombok.experimental.FieldDefaults;
 import org.eugens21.testcontainers.config.storage.ScenarioContext;
 import org.eugens21.testcontainers.config.storage.StorageKey;
 import org.eugens21.testcontainers.service.Service;
+import org.eugens21.user_interface.object.HyperLink;
 import org.eugens21.user_interface.page.HomePage;
 import org.eugens21.user_interface.page.home.HeaderPanel;
 import org.eugens21.user_interface.page.home.LeftMenu;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
@@ -62,8 +62,8 @@ public class Step extends BaseStep {
         LeftMenu value = context.getValue(StorageKey.GENERIC, LeftMenu.class);
         List<String> collect = value.getItems()
                 .stream()
-                .map(el -> el.getText())
-                .collect(Collectors.toList());
-        menus.equals(collect);
+                .map(HyperLink::getText)
+                .toList();
+        assert menus.equals(collect);
     }
 }
