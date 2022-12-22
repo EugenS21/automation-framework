@@ -26,4 +26,5 @@ public class HyperLink implements Href {
     public String getText() {
         return webElement.getText();
     }
+
 }

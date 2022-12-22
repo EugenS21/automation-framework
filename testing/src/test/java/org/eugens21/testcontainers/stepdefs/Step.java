@@ -5,26 +5,29 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.assertj.core.api.SoftAssertions;
 import org.eugens21.testcontainers.config.storage.ScenarioContext;
 import org.eugens21.testcontainers.config.storage.StorageKey;
-import org.eugens21.testcontainers.service.Service;
 import org.eugens21.user_interface.object.HyperLink;
 import org.eugens21.user_interface.page.HomePage;
 import org.eugens21.user_interface.page.home.HeaderPanel;
 import org.eugens21.user_interface.page.home.LeftMenu;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@RequiredArgsConstructor
 public class Step extends BaseStep {
 
-    Service service;
     HomePage homePage;
-    ScenarioContext context;
 
+    @Autowired
+    public Step(SoftAssertions softAssertions, ModelMapper modelMap, HomePage homePage, ScenarioContext context) {
+        super(softAssertions, modelMap, context);
+        this.homePage = homePage;
+    }
 
     @Given("I am on home page")
     public void givenOnHomePage() {
@@ -64,6 +67,13 @@ public class Step extends BaseStep {
                 .stream()
                 .map(HyperLink::getText)
                 .toList();
-        assert menus.equals(collect);
+        softAssertions.assertThat(collect).containsExactlyInAnyOrderElementsOf(collect);
     }
+
+    @When("I click on {string} menu item")
+    public void iClickOnAboutUsMenuItem(String item) {
+        LeftMenu value = context.getValue(StorageKey.GENERIC, LeftMenu.class);
+        value.getItem(item).open();
+    }
+
 }
