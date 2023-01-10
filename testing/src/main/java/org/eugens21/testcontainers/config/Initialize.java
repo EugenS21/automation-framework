@@ -2,14 +2,18 @@ package org.eugens21.testcontainers.config;
 
 import lombok.val;
 import org.assertj.core.api.SoftAssertions;
+import org.eugens21.api.Rest;
+import org.eugens21.user_interface.UserInterface;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
-@Component
+@Configuration
+@Import({Rest.class, UserInterface.class})
 public class Initialize {
 
     @Bean

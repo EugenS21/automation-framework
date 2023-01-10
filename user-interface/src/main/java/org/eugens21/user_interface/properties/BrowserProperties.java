@@ -1,4 +1,4 @@
-package org.eugens21.user_interface.properties.browser;
+package org.eugens21.user_interface.properties;
 
 import lombok.AccessLevel;
 import lombok.Data;

@@ -15,6 +15,7 @@ import org.eugens21.user_interface.page.home.HeaderPanel;
 import org.eugens21.user_interface.page.home.LeftMenu;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -22,11 +23,13 @@ import java.util.List;
 public class Step extends BaseStep {
 
     HomePage homePage;
+    WebClient webClient;
 
     @Autowired
-    public Step(SoftAssertions softAssertions, ModelMapper modelMap, HomePage homePage, ScenarioContext context) {
+    public Step(SoftAssertions softAssertions, ModelMapper modelMap, HomePage homePage, ScenarioContext context, WebClient webClient) {
         super(softAssertions, modelMap, context);
         this.homePage = homePage;
+        this.webClient = webClient;
     }
 
     @Given("I am on home page")
