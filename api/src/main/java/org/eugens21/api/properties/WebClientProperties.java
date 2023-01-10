@@ -1,22 +1,21 @@
-package org.eugens21.user_interface.properties.locators;
+package org.eugens21.api.properties;
 
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.eugens21.user_interface.properties.locators.home_page.HomePageDetails;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.http.client.reactive.ClientHttpConnector;
 
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@ConfigurationProperties(prefix = "pages")
 @ConfigurationPropertiesScan
-public class Pages {
+@ConfigurationProperties(prefix = "client")
+public class WebClientProperties {
 
-    @NestedConfigurationProperty
-    HomePageDetails home;
+    String baseUrl;
+    ClientHttpConnector clientConnector;
 
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.eugens21.user_interface.page.home.Body;
-import org.eugens21.user_interface.properties.locators.Pages;
+import org.eugens21.user_interface.properties.PagesLocatorsProperties;
 import org.eugens21.user_interface.properties.locators.home_page.HomePageDetails;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class HomePage {
     Body body;
 
     @Autowired
-    public HomePage(WebDriver webDriver, Pages pages) {
+    public HomePage(WebDriver webDriver, PagesLocatorsProperties pagesLocatorsProperties) {
         this.webDriver = webDriver;
-        this.homePageDetails = pages.getHome();
+        this.homePageDetails = pagesLocatorsProperties.getHome();
         this.webDriver.get(homePageDetails.getUrl());
     }
 

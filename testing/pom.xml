@@ -13,8 +13,8 @@
     <description>Testing module</description>
 
     <properties>
-        <cucumber.version>7.9.0</cucumber.version>
-        <model.mapper.version>3.1.0</model.mapper.version>
+        <cucumber.version>7.10.1</cucumber.version>
+        <model.mapper.version>3.1.1</model.mapper.version>
     </properties>
 
     <dependencies>
@@ -35,7 +35,10 @@
         <dependency>
             <groupId>org.eugens21</groupId>
             <artifactId>user-interface</artifactId>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eugens21</groupId>
+            <artifactId>api</artifactId>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>

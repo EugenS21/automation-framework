@@ -1,0 +1,3 @@
+client:
+  baseUrl: http://parabank.parasoft.com/parabank/services/bank/
+  clientConnector: ReactorClientHttpConnector
